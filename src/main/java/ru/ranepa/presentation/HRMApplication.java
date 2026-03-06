@@ -17,7 +17,6 @@ public class HRMApplication {
         EmployeeRepository repository = new EmployeeRepositoryImpl();
         service = new HRMService(repository);
 
-
         while (true) {
             printMenu();
             int choice = readIntInput("Viberete punkt menu: ");
@@ -41,8 +40,11 @@ public class HRMApplication {
                     System.out.println("Vykhod iz programmy. Do svidaniya!");
                     scanner.close();
                     return;
+                case 7:
+                    filterEmployeesByPosition();
+                    break;
                 default:
-                    System.out.println("Nevernyy punkt menyu. Pozhaluysta, vyberite ot 1 do 6.");
+                    System.out.println("Nevernyy punkt menyu. Pozhaluysta, vyberite ot 1 do 7.");
             }
 
             System.out.println("Nazhmite Enter dlya prodolzheniya");
@@ -54,10 +56,11 @@ public class HRMApplication {
         System.out.println(" MENYU UPRAVLENIYA SOTRUDNIKAMI ");
         System.out.println("1. Vydat' spisok vsekh sotrudnikov ");
         System.out.println("2. Dobavit' novogo sotrudnika");
-        System.out.println("3.  Udalit' sotrudnika po ID");
+        System.out.println("3. Udalit' sotrudnika po ID");
         System.out.println("4. Poisk sotrudnika po ID");
         System.out.println("5. Pokazat' statistiku (srednyaya zarplata, top-menedzher)");
         System.out.println("6. Vykhod");
+        System.out.println("7. Poisk sotrudnikov po dolzhnosti");
         System.out.print("Vash vybor: ");
     }
 
@@ -109,6 +112,17 @@ public class HRMApplication {
         System.out.println(statistics);
     }
 
+    private static void filterEmployeesByPosition() {
+        System.out.println("Poisk sotrudnikov po dolzhnosti:");
+        String position = readStringInput("Vvedite dolzhnost' dlya poiska: ");
+        List<Employee> employees = service.filterByPosition(position);
+        if (employees.isEmpty()) {
+            System.out.println("Sotrudniki s dolzhnost'yu '" + position + "' ne naydeny.");
+        } else {
+            System.out.println("Sotrudniki s dolzhnost'yu '" + position + "':");
+            employees.forEach(System.out::println);
+        }
+    }
 
     private static int readIntInput(String prompt) {
         System.out.print(prompt);
