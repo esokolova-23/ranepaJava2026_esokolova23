@@ -87,23 +87,16 @@ public class HRMApplication {
     private static void deleteEmployeeById() {
         System.out.println("Udaleniye sotrudnika po ID:");
         long id = readLongInput("Vvedite ID sotrudnika dlya udalenia: ");
-        boolean deleted = service.deleteEmployee(id);
-        if (deleted) {
-            System.out.println("Sotrudnik s ID " + id + " udalen.");
-        } else {
-            System.out.println("Sotrudnik s ID " + id + " ne nayden.");
-        }
+        System.out.println(service.deleteEmployee(id));
     }
 
     private static void findEmployeeById() {
         System.out.println("Poisk sotrudnika po ID:");
         long id = readLongInput("Vvedite ID sotrudnika dlya poiska: ");
-        Optional<Employee> employee = service.getEmployeeById(id);
-        if (employee.isPresent()) {
-            System.out.println("Naydennyy sotrudnik: " + employee.get());
-        } else {
-            System.out.println("Sotrudnik s ID " + id + " ne nayden.");
-        }
+
+        // Поиск сотрудника по ID
+        String result = service.getEmployeeById(id);
+        System.out.println(result);
     }
 
     private static void showStatistics() {

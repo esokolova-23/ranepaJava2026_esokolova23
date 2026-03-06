@@ -34,15 +34,20 @@ public class HRMService {
     }
 
     // Поиск сотрудника по ID
-    public Optional<Employee> getEmployeeById(long id) {
-        return repository.findById(id);
+    public String getEmployeeById(long id) {
+        Optional<Employee> employee = repository.findById(id);
+        if (employee.isPresent()) {
+            return "Naiden sonrudnik: " + employee.get().toString();
+        } else {
+            return "Sotrudnik s ID " + id + " ne naiden .";
+        }
     }
 
     // Удаление сотрудника по ID
-    public boolean deleteEmployee(long id) {
+    public String deleteEmployee(long id) {
         String result = repository.delete(id);
 
-        return !result.isEmpty();
+        return result;
     }
 
     // Расчёт средней зарплаты
